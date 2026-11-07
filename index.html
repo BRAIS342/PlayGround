@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0b0e" />
+<title>Sunset City RP — Multijugador</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5S3.8 15.4 3.8 9.6A4.6 4.6 0 0 1 12 6.3a4.6 4.6 0 0 1 8.2 3.3c0 5.8-8.2 10.9-8.2 10.9Z"/></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><path d="M4 10h16M5 10a7 7 0 0 1 14 0M3.5 10h17l-1.2 2H4.7L3.5 10ZM5 15h14M4 19h16"/></symbol>
+  <symbol id="i-water" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.6 3 7.9 7 9.5 4-1.6 7-4.9 7-9.5V6l-7-3Z"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 9v6M18 9v6"/></symbol>
+  <symbol id="i-gun" viewBox="0 0 24 24"><path d="M3 8h13v3h3l2 3h-6l-1 4h-4l1-4H3V8Z"/><path d="M7 14v2"/></symbol>
+  <symbol id="i-ammo" viewBox="0 0 24 24"><path d="M7 21V9l2-5h2l2 5v12H7ZM15 21V10l1.5-3H19l1 3v11h-5Z"/></symbol>
+  <symbol id="i-shirt" viewBox="0 0 24 24"><path d="m8 3-5 3 2 5 3-1v11h8V10l3 1 2-5-5-3-4 2-4-2Z"/></symbol>
+  <symbol id="i-pants" viewBox="0 0 24 24"><path d="M6 3h12l1 18h-5l-2-9-2 9H5L6 3Z"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0H4ZM18 14h3v3h-5"/></symbol>
+  <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M4 21h12M5 10h10M17 7h2l2 3v7a2 2 0 0 1-4 0v-4h-2"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="m5 11 2-5h10l2 5M3 11h18v6H3v-6ZM6 17v2M18 17v2"/><circle cx="7" cy="14" r="1"/><circle cx="17" cy="14" r="1"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 4h16v12H9l-5 4V4Z"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6ZM9 3v15M15 6v15"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.7 6.3.9-4.6 4.4 1.1 6.2L12 17.3l-5.5 2.9 1.1-6.2L3 9.6l6.3-.9L12 3Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14 6a5 5 0 0 1 6.5 6.5L11 22l-4-4L16.5 8.5A5 5 0 0 1 14 6Z"/><path d="m5 17 2 2"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="8" r="4"/><path d="m11 11 9 9M17 17l2-2M20 20l2-2"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.4.6 4 2.8 4 6"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M3 12h18"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></symbol>
+  <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/><path d="m10 22 2-6-2-4 3-4 3 4 3 1M10 8 7 11M12 12l-4 4"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9 6.3 6.3M17.7 17.7l1.4 1.4M19.1 4.9 17.7 6.3M6.3 17.7l-1.4 1.4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10.5 10.5 0 0 1 14 0M8.5 15.5a5.5 5.5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/></symbol>
+</svg>
+
+<div id="app">
+  <canvas id="game" aria-label="Ciudad de Sunset City"></canvas>
+  <div id="sun-tint"></div>
+  <div id="vignette"></div>
+
+  <!-- ============ HUD ============ -->
+  <div id="hud" class="hidden">
+    <div id="top-left">
+      <div id="location-chip"><svg class="icon"><use href="#i-pin"/></svg><span id="location-name">Sunset City</span></div>
+      <div id="online-chip"><span class="pulse-dot"></span><span id="online-count">0 en línea</span></div>
+      <div id="clock-chip"><svg class="icon"><use href="#i-clock"/></svg><span id="clock">18:40</span></div>
+    </div>
+
+    <div id="top-right">
+      <div id="money-chip"><span id="money">$0</span><small>EFECTIVO</small></div>
+      <div id="bank-chip"><svg class="icon"><use href="#i-lock"/></svg><span id="bank">$0</span></div>
+      <div id="wanted" class="hidden"></div>
+      <div id="level-chip"><span id="level">1</span><div><b>NIVEL</b><i id="xp-bar"><u></u></i></div></div>
+    </div>
+
+    <div id="minimap-wrap">
+      <canvas id="minimap" width="220" height="220"></canvas>
+      <div id="minimap-ring"></div>
+      <div id="minimap-n">N</div>
+      <div id="zone-label">SUNSET CITY</div>
+    </div>
+
+    <div id="chat-panel">
+      <div id="chat-log"></div>
+      <div id="chat-input-wrap" class="hidden">
+        <span id="chat-channel">LOCAL</span>
+        <input id="chat-input" type="text" maxlength="140" autocomplete="off" placeholder="Escribe… (/me /do /ooc /g /pm)" />
+      </div>
+    </div>
+
+    <div id="bottom-left">
+      <div id="bars">
+        <div class="bar-row"><svg class="icon hp"><use href="#i-heart"/></svg><div class="bar"><u id="bar-health" style="width:100%"></u></div><span id="val-health">100</span></div>
+        <div class="bar-row armor-row"><svg class="icon armor"><use href="#i-shield"/></svg><div class="bar"><u id="bar-armor" style="width:0%"></u></div><span id="val-armor">0</span></div>
+        <div class="bar-row"><svg class="icon food"><use href="#i-food"/></svg><div class="bar"><u id="bar-hunger" style="width:100%"></u></div><span id="val-hunger">100</span></div>
+        <div class="bar-row"><svg class="icon water"><use href="#i-water"/></svg><div class="bar"><u id="bar-thirst" style="width:100%"></u></div><span id="val-thirst">100</span></div>
+      </div>
+      <div id="weapon-chip" class="hidden">
+        <svg class="icon"><use href="#i-gun"/></svg>
+        <div><b id="weapon-name">Pistola</b><small id="weapon-ammo">12 / 24</small></div>
+      </div>
+      <div id="vehicle-chip" class="hidden">
+        <svg class="icon"><use href="#i-car"/></svg>
+        <div><b id="vehicle-name">Sedán</b><small><span id="vehicle-speed">0</span> km/h · <span id="vehicle-fuel">100%</span></small><div class="fuel-bar"><u id="fuel-fill"></u></div></div>
+      </div>
+    </div>
+
+    <div id="mission-chip" class="hidden">
+      <div class="mission-top"><span id="mission-tag">TRABAJO</span><span id="mission-timer">--:--</span></div>
+      <b id="mission-title">Reparto urgente</b>
+      <span id="mission-desc">Recoge el paquete</span>
+      <div id="mission-distance">— m</div>
+    </div>
+
+    <div id="interact-prompt" class="hidden"><kbd>E</kbd><span id="interact-text">Entrar</span></div>
+    <div id="action-hint"></div>
+
+    <div id="quick-buttons">
+      <button id="btn-phone" class="quick-btn" title="Teléfono (P)"><svg class="icon"><use href="#i-phone"/></svg><small>P</small></button>
+      <button id="btn-map" class="quick-btn" title="Mapa (M)"><svg class="icon"><use href="#i-map"/></svg><small>M</small></button>
+      <button id="btn-chat" class="quick-btn" title="Chat (T)"><svg class="icon"><use href="#i-chat"/></svg><small>T</small></button>
+      <button id="btn-sound" class="quick-btn" title="Sonido"><svg class="icon"><use href="#i-music"/></svg><small>♪</small></button>
+    </div>
+  </div>
+
+  <!-- ============ START SCREEN ============ -->
+  <div id="start-screen">
+    <div class="start-bg"></div>
+    <div class="start-content">
+      <div class="brand">
+        <div class="brand-mark">SC</div>
+        <div>
+          <div class="brand-kicker">ROL · ACCIÓN · MULTIJUGADOR</div>
+          <h1>SUNSET<span>CITY</span> RP</h1>
+          <p class="brand-sub">Vive la ciudad. Haz tu historia.</p>
+        </div>
+      </div>
+
+      <div class="start-grid">
+        <div class="start-info">
+          <div class="feature-row">
+            <div class="feature"><b>TIENDAS</b><span>Ropa, armas, comida, gasolina</span></div>
+            <div class="feature"><b>TRABAJOS</b><span>Reparto, taxi y misiones</span></div>
+            <div class="feature"><b>CHAT RP</b><span>/me, /do, /ooc y chat global</span></div>
+            <div class="feature"><b>MULTIJUGADOR</b><span>Jugadores reales + bots en la ciudad</span></div>
+          </div>
+          <div class="controls-card">
+            <h3>CONTROLES</h3>
+            <div class="controls-list">
+              <div><kbd>W A S D</kbd><span>Moverse</span></div>
+              <div><kbd>SHIFT</kbd><span>Correr</span></div>
+              <div><kbd>E</kbd><span>Interactuar / tienda</span></div>
+              <div><kbd>F</kbd><span>Entrar / salir del coche</span></div>
+              <div><kbd>CLIC</kbd><span>Disparar</span></div>
+              <div><kbd>T</kbd><span>Chat</span></div>
+              <div><kbd>P</kbd><span>Teléfono / trabajos</span></div>
+              <div><kbd>M</kbd><span>Mapa</span></div>
+            </div>
+            <p class="mobile-note">En móvil usa el joystick y los botones en pantalla.</p>
+          </div>
+          <div class="mp-note"><span class="pulse-dot"></span><b>Multijugador local:</b> abre esta página en otra pestaña para jugar con otra persona en la misma ciudad.</div>
+        </div>
+
+        <div class="creator-card">
+          <div class="creator-head">
+            <span>CREA TU PERSONAJE</span>
+            <div class="creator-preview-wrap">
+              <canvas id="avatar-preview" width="260" height="300"></canvas>
+              <div class="preview-glow"></div>
+            </div>
+          </div>
+          <label class="field">
+            <span>Nombre de rol</span>
+            <input id="name-input" type="text" maxlength="18" placeholder="Ej. Marco Vela" value="" />
+          </label>
+          <div class="swatch-group">
+            <span>Piel</span>
+            <div id="skin-swatches" class="swatches"></div>
+          </div>
+          <div class="swatch-group">
+            <span>Camiseta</span>
+            <div id="shirt-swatches" class="swatches"></div>
+          </div>
+          <div class="swatch-group">
+            <span>Pantalón</span>
+            <div id="pants-swatches" class="swatches"></div>
+          </div>
+          <div class="swatch-group">
+            <span>Accesorio</span>
+            <div id="acc-swatches" class="swatches accessories"></div>
+          </div>
+          <div class="creator-actions">
+            <button id="btn-start" class="primary-btn">ENTRAR A LA CIUDAD <svg class="icon"><use href="#i-arrow"/></svg></button>
+            <button id="btn-continue" class="ghost-btn hidden">Continuar partida</button>
+          </div>
+          <p class="save-note">Tu progreso se guarda automáticamente en este dispositivo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="start-footer">SUNSET CITY RP · Servidor comunitario · +18 roleplay</div>
+  </div>
+
+  <!-- ============ SHOP / INTERIOR OVERLAY ============ -->
+  <div id="shop-overlay" class="overlay hidden">
+    <div id="shop-window" class="shop-window">
+      <div id="shop-hero">
+        <div class="shop-hero-top">
+          <div id="shop-icon">B</div>
+          <div>
+            <div id="shop-kicker">COMERCIO</div>
+            <h2 id="shop-title">Binco</h2>
+            <p id="shop-subtitle">Ropa para gente con estilo.</p>
+          </div>
+        </div>
+        <canvas id="shop-preview" width="300" height="340"></canvas>
+        <div id="shop-hero-info"></div>
+      </div>
+      <div id="shop-body">
+        <div class="shop-head">
+          <div id="shop-tabs"></div>
+          <div class="shop-money"><svg class="icon"><use href="#i-cash"/></svg><b id="shop-money">$0</b></div>
+          <button id="shop-close" class="icon-btn" aria-label="Cerrar"><svg class="icon"><use href="#i-x"/></svg></button>
+        </div>
+        <div id="shop-catalog"></div>
+        <div id="shop-footer">
+          <span id="shop-hint">Selecciona un artículo.</span>
+          <button id="shop-leave" class="ghost-btn">SALIR DEL LOCAL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PHONE ============ -->
+  <div id="phone-overlay" class="overlay hidden">
+    <div id="phone">
+      <div class="phone-top">
+        <div class="phone-notch"></div>
+        <div class="phone-status"><span id="phone-time">18:40</span><span>▮▮▮</span></div>
+        <div class="phone-app-head">
+          <div class="phone-logo">SC</div>
+          <div><b>Sunset Phone</b><small>Los Santos... perdón, Sunset City</small></div>
+          <button id="phone-close" class="icon-btn"><svg class="icon"><use href="#i-x"/></svg></button>
+        </div>
+      </div>
+      <div id="phone-content"></div>
+      <div class="phone-tabs">
+        <button data-tab="jobs" class="active"><svg class="icon"><use href="#i-briefcase"/></svg><span>Trabajos</span></button>
+        <button data-tab="players"><svg class="icon"><use href="#i-users"/></svg><span>Online</span></button>
+        <button data-tab="guide"><svg class="icon"><use href="#i-bag"/></svg><span>Guía</span></button>
+        <button data-tab="settings"><svg class="icon"><use href="#i-settings"/></svg><span>Ajustes</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MAP ============ -->
+  <div id="map-overlay" class="overlay hidden">
+    <div class="map-window">
+      <div class="map-head">
+        <div><span class="map-kicker">MAPA DE LA CIUDAD</span><h2>SUNSET CITY</h2></div>
+        <button id="map-close" class="icon-btn"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="map-body">
+        <canvas id="bigmap" width="760" height="760"></canvas>
+        <div id="map-legend"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ INVENTORY ============ -->
+  <div id="inv-overlay" class="overlay hidden">
+    <div class="inv-window">
+      <div class="inv-head">
+        <div><span class="map-kicker">MOCHILA</span><h2>INVENTARIO</h2></div>
+        <div class="shop-money"><svg class="icon"><use href="#i-cash"/></svg><b id="inv-money">$0</b></div>
+        <button id="inv-close" class="icon-btn"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <div id="inv-grid"></div>
+      <div class="inv-foot"><span>Haz clic en un consumible para usarlo.</span><button id="inv-close2" class="ghost-btn">CERRAR</button></div>
+    </div>
+  </div>
+
+  <div id="toasts"></div>
+  <div id="mobile-controls" class="hidden">
+    <div id="joystick"><div id="stick"></div></div>
+    <div id="mobile-actions">
+      <button class="mob-btn" data-action="shoot"><svg class="icon"><use href="#i-gun"/></svg><span>DISPARAR</span></button>
+      <button class="mob-btn" data-action="interact"><b>E</b><span>USAR</span></button>
+      <button class="mob-btn" data-action="vehicle"><b>F</b><span>COCHE</span></button>
+      <button class="mob-btn" data-action="sprint"><svg class="icon"><use href="#i-walk"/></svg><span>CORRER</span></button>
+      <button class="mob-btn" data-action="chat"><svg class="icon"><use href="#i-chat"/></svg><span>CHAT</span></button>
+    </div>
+  </div>
+
+  <div id="pause-screen" class="hidden">
+    <div class="pause-card">
+      <h2>PAUSA</h2>
+      <p>La ciudad sigue viva ahí fuera.</p>
+      <button id="btn-resume" class="primary-btn">CONTINUAR</button>
+      <button id="btn-exit" class="ghost-btn">Salir al menú</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
