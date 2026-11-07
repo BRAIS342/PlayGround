@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#101a2d" />
+  <title>Sunset Sprint — 60 Second Time Trial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{font-family:'DM Sans',sans-serif;color:#fff;background:#101a2d;font-synthesis:none;text-rendering:optimizeLegibility}
+    *{box-sizing:border-box}html,body,#app{margin:0;width:100%;height:100%;overflow:hidden}body{user-select:none;-webkit-user-select:none;touch-action:none}
+    canvas{position:absolute;inset:0;width:100%;height:100%;display:block;outline:none}
+    .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,transparent 35%,rgba(9,15,28,.12) 76%,rgba(9,15,28,.44));z-index:1}
+    .topbar{position:absolute;z-index:3;top:0;left:0;right:0;padding:24px 34px;display:flex;align-items:flex-start;justify-content:space-between;pointer-events:none}
+    .brand{display:flex;align-items:center;gap:12px}.brand-mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#ffcc68,#ff6d55);display:grid;place-items:center;box-shadow:0 6px 24px #fa784955;color:#192034;font-size:22px;font-weight:900;transform:rotate(-5deg)}
+    .brand-text{font:800 22px/.9 'Barlow Condensed',sans-serif;letter-spacing:1.6px;text-shadow:0 2px 12px #172238}.brand-text small{display:block;color:#ffca71;font:700 10px/1.6 'DM Sans',sans-serif;letter-spacing:3px}
+    .hud{display:flex;gap:10px;align-items:flex-start;pointer-events:auto}.hud-card{min-width:94px;padding:10px 15px 9px;border:1px solid #ffffff25;border-radius:13px;background:#101a2dcc;backdrop-filter:blur(12px);box-shadow:0 8px 26px #0b142422}.hud-label{font-size:9px;letter-spacing:1.8px;font-weight:800;color:#a8b7c8;text-transform:uppercase}.hud-value{font:800 25px/.98 'Barlow Condensed',sans-serif;letter-spacing:.5px;margin-top:3px}.hud-value em{font-style:normal;font-size:12px;color:#b1bfce}.timer-card .hud-value{color:#ffcf77}.timer-card.urgent .hud-value{color:#ff655e;animation:pulse .5s infinite alternate}@keyframes pulse{to{opacity:.52}}
+    .lap-pill{position:absolute;z-index:3;top:109px;left:34px;padding:8px 13px;border:1px solid #ffffff24;border-radius:10px;background:#101a2dbb;color:#d9e3ed;font-size:11px;font-weight:700;letter-spacing:1px;backdrop-filter:blur(8px)}.lap-pill b{color:#ffca71;margin-left:6px}
+    .boost-meter{position:absolute;z-index:3;left:50%;bottom:35px;transform:translateX(-50%);width:min(270px,48vw);pointer-events:none}.boost-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:9px;letter-spacing:2px;font-weight:800;color:#fff;text-shadow:0 2px 5px #000}.boost-track{height:7px;border-radius:9px;background:#111b2ac9;border:1px solid #ffffff66;padding:1px;overflow:hidden}.boost-fill{height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,#ff9b4b,#ffe978);box-shadow:0 0 12px #ffc956;transition:width .1s}
+    .speedo{position:absolute;z-index:3;bottom:30px;right:35px;width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#17273aee 56%,#25334bde 57%);border:2px solid #ffffff45;box-shadow:0 5px 25px #0b142455;pointer-events:none}.speedo:before{content:'';position:absolute;inset:5px;border-radius:50%;border:1px solid #ffffff25}.speed-reading{text-align:center}.speed-num{font:800 31px/.85 'Barlow Condensed',sans-serif}.speed-unit{margin-top:5px;color:#b7c6d6;font-size:8px;letter-spacing:1.8px;font-weight:700}
+    .toast{position:absolute;z-index:4;top:22%;left:50%;transform:translate(-50%,-10px);opacity:0;transition:.3s;font:900 34px 'Barlow Condensed',sans-serif;letter-spacing:4px;text-transform:uppercase;color:#ffdc81;text-shadow:0 4px 20px #f87647,0 2px 4px #172238;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+    .overlay{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:22px;background:linear-gradient(90deg,#101827a8,#10182738 52%,#10182754);transition:opacity .45s,visibility .45s}.overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}.panel{width:min(440px,92vw);position:relative;padding:33px 34px 29px;border:1px solid #ffffff30;border-radius:24px;background:linear-gradient(145deg,#142238f2,#111b2bea);box-shadow:0 28px 90px #07111db3;backdrop-filter:blur(20px);overflow:hidden}.panel:before{content:'';position:absolute;width:210px;height:210px;right:-98px;top:-104px;border-radius:50%;background:#ffad5c20;filter:blur(4px)}
+    .eyebrow{display:flex;align-items:center;gap:8px;color:#ffca71;font-size:10px;letter-spacing:2.7px;font-weight:800;text-transform:uppercase}.eyebrow:before{content:'';width:22px;height:2px;background:#ffca71}.headline{margin:9px 0 4px;font:900 clamp(54px,9vw,76px)/.79 'Barlow Condensed',sans-serif;letter-spacing:-1px;text-transform:uppercase}.headline span{color:#ffbd66}.subtitle{margin:15px 0 22px;max-width:330px;color:#b6c3d2;font-size:13px;line-height:1.6}.stat-row{display:flex;gap:9px;margin:0 0 23px}.mini-stat{flex:1;padding:11px;border:1px solid #ffffff19;border-radius:12px;background:#ffffff08}.mini-stat strong{display:block;font:800 21px 'Barlow Condensed',sans-serif;color:#fff}.mini-stat span{font-size:8px;letter-spacing:1.5px;font-weight:800;color:#95a7bb}.primary{width:100%;height:53px;border:0;border-radius:13px;background:linear-gradient(100deg,#ffbd62,#ff785c);box-shadow:0 8px 28px #f9865350;color:#242337;font:900 15px 'DM Sans',sans-serif;letter-spacing:1.4px;cursor:pointer;transition:transform .15s,filter .15s}.primary:hover{transform:translateY(-2px);filter:brightness(1.08)}.primary:active{transform:translateY(1px)}.control-note{margin-top:14px;color:#8294a8;text-align:center;font-size:10px;line-height:1.6}.control-note b{color:#d8e2eb}.panel-footer{display:flex;align-items:center;justify-content:space-between;margin-top:19px;padding-top:14px;border-top:1px solid #ffffff15;color:#7f91a5;font-size:9px;letter-spacing:1.4px;font-weight:700}.sound-btn{position:absolute;z-index:5;top:26px;right:29px;width:36px;height:36px;border:1px solid #ffffff33;border-radius:11px;background:#111b2bc9;color:white;font-size:16px;cursor:pointer;backdrop-filter:blur(8px)}
+    .countdown{position:absolute;z-index:5;inset:0;display:grid;place-items:center;font:900 min(28vw,170px)/1 'Barlow Condensed',sans-serif;color:#fff;text-shadow:0 8px 40px #ff884a;pointer-events:none;opacity:0;transform:scale(.75)}.countdown.show{animation:count .8s ease-out}@keyframes count{0%{opacity:0;transform:scale(.65)}25%{opacity:1;transform:scale(1.06)}75%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.14)}}
+    .touch-controls{position:absolute;z-index:4;inset:auto 0 21px;display:none;align-items:flex-end;justify-content:space-between;padding:0 20px;pointer-events:none}.touch-group{display:flex;gap:11px;pointer-events:auto}.touch-btn{width:61px;height:61px;border-radius:19px;border:1px solid #ffffff62;background:#172439b9;color:white;font-size:25px;font-weight:800;box-shadow:0 5px 18px #09111c66;backdrop-filter:blur(9px);touch-action:none}.touch-btn:active,.touch-btn.down{background:#ffac59c9;color:#162037}.touch-btn.drift{width:69px;height:54px;font-size:12px;letter-spacing:1px;color:#ffd27b}.touch-btn.gas{height:73px;width:73px;border-radius:50%;font-size:11px;letter-spacing:1px;color:#ffdb8d}
+    .finish-score{display:flex;gap:12px;margin:17px 0 23px}.finish-score div{flex:1;padding:12px;border-radius:12px;background:#ffffff0b;border:1px solid #ffffff19}.finish-score strong{display:block;color:#ffca71;font:800 26px 'Barlow Condensed',sans-serif}.finish-score span{color:#92a4b8;font-size:9px;letter-spacing:1px;font-weight:700}
+    @media(max-width:700px){.topbar{padding:16px 15px}.brand-mark{width:36px;height:36px}.brand-text{font-size:18px}.brand-text small{font-size:8px}.hud{gap:6px}.hud-card{min-width:68px;padding:8px 9px}.hud-label{font-size:7px;letter-spacing:1.1px}.hud-value{font-size:21px}.lap-pill{top:73px;left:15px;font-size:9px;padding:7px 10px}.speedo{width:72px;height:72px;right:15px;bottom:19px}.speed-num{font-size:25px}.speed-unit{font-size:7px}.boost-meter{bottom:27px;width:150px;left:48%}.touch-controls{display:flex}.boost-head{font-size:8px}.panel{padding:28px 23px 23px}.sound-btn{top:14px;right:14px}.toast{top:20%;font-size:27px}.control-note{font-size:9px}.overlay{background:linear-gradient(90deg,#10182782,#10182733 52%,#1018273b)}}
+    @media(max-height:620px) and (min-width:701px){.topbar{padding-top:15px}.overlay .panel{transform:scale(.86)}.speedo{width:76px;height:76px;bottom:18px}.boost-meter{bottom:22px}}
+  </style>
+</head>
+<body>
+  <main id="app" aria-label="Sunset Sprint time trial game">
+    <canvas id="game" aria-label="3D kart racing game"></canvas><div class="vignette"></div>
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">✦</div><div class="brand-text">SUNSET SPRINT<small>ISLAND TIME TRIAL</small></div></div>
+      <div class="hud">
+        <div class="hud-card timer-card" id="timerCard"><div class="hud-label">Time left</div><div class="hud-value" id="timer">60.0<em>s</em></div></div>
+        <div class="hud-card"><div class="hud-label">Best lap</div><div class="hud-value" id="bestLap">—</div></div>
+      </div>
+    </header>
+    <div class="lap-pill">LAP <b id="lap">1 / ∞</b><span id="lapTime"> · 00:00.0</span></div>
+    <div class="speedo"><div class="speed-reading"><div class="speed-num" id="speed">000</div><div class="speed-unit">KM / H</div></div></div>
+    <div class="boost-meter"><div class="boost-head"><span>DRIFT CHARGE</span><span id="boostText">HOLD TO DRIFT</span></div><div class="boost-track"><div class="boost-fill" id="boostFill"></div></div></div>
+    <div class="toast" id="toast">PERFECT DRIFT!</div>
+    <button class="sound-btn" id="soundBtn" title="Toggle sound" aria-label="Toggle sound">♪</button>
+    <div class="countdown" id="countdown">3</div>
+    <div class="touch-controls" id="touchControls">
+      <div class="touch-group"><button class="touch-btn" data-key="left" aria-label="Steer left">‹</button><button class="touch-btn" data-key="right" aria-label="Steer right">›</button></div>
+      <div class="touch-group"><button class="touch-btn drift" data-key="drift">DRIFT</button><button class="touch-btn gas" data-key="gas">GO</button></div>
+    </div>
+    <section class="overlay" id="startOverlay"><div class="panel">
+      <div class="eyebrow">ONE MINUTE. ONE PERFECT RUN.</div><h1 class="headline">CHASE<br><span>THE SUN.</span></h1>
+      <p class="subtitle">Cut through the palms, nail the corners, and set your best lap before the clock runs out.</p>
+      <div class="stat-row"><div class="mini-stat"><strong>60<span style="color:#ffca71">s</span></strong><span>TIME TRIAL</span></div><div class="mini-stat"><strong>∞</strong><span>NO ITEM RNG</span></div><div class="mini-stat"><strong>1</strong><span>ISLAND CIRCUIT</span></div></div>
+      <button class="primary" id="startBtn">START YOUR RUN <span>→</span></button>
+      <div class="control-note"><b>WASD / ARROWS</b> drive &nbsp;·&nbsp; <b>SPACE</b> hold a drift &nbsp;·&nbsp; release to boost</div>
+      <div class="panel-footer"><span>COASTLINE CIRCUIT</span><span>✦ &nbsp; SUNSET BAY</span></div>
+    </div></section>
+    <section class="overlay hidden" id="finishOverlay"><div class="panel">
+      <div class="eyebrow">TIME TRIAL COMPLETE</div><h2 class="headline" id="finishTitle">NICE<br><span>DRIVING.</span></h2>
+      <p class="subtitle" id="finishCopy">The island is yours. One more run?</p>
+      <div class="finish-score"><div><strong id="finishLaps">0</strong><span>LAPS COMPLETED</span></div><div><strong id="finishBest">—</strong><span>BEST LAP</span></div></div>
+      <button class="primary" id="retryBtn">RACE AGAIN <span>↻</span></button><div class="panel-footer"><span>COASTLINE CIRCUIT</span><span id="finishGrade">RACE OVER</span></div>
+    </div></section>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
